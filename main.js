@@ -1,9 +1,11 @@
 const XMLNS_SVG='http://www.w3.org/2000/svg'
 
 window.addEventListener('load',
-    () => drawLogo(200, Color.fromHex(0x0033ff)))
+    () => drawLogo(200,
+        /* foreground */ Color.fromHex(0xffffff),
+        /* background */ Color.fromHex(0x0033ff)))
 
-function drawLogo(size, color) {
+function drawLogo(size, foregroundColor, backgroundColor) {
   let svg = document.getElementById('logo')
   svg.setAttribute('width',  size)
   svg.setAttribute('height', size)
@@ -17,9 +19,9 @@ function drawLogo(size, color) {
     hexagon,
     rightTriangle,
     bottomQuadrilateral
-  ] = createPolygons(center, points, color)
+  ] = createPolygons(center, points, foregroundColor, backgroundColor)
 
-  let letterC = createLetterC(center, points)
+  let letterC = createLetterC(center, points, foregroundColor)
 
   svg.appendChild(hexagon)
   svg.appendChild(rightTriangle)
@@ -28,7 +30,7 @@ function drawLogo(size, color) {
 }
 
 // Letter C
-function createLetterC(center, points) {
+function createLetterC(center, points, foregroundColor) {
   let bottomBottom = points[0].lerp(center, 1/3)
   let bottomTop = points[0].lerp(center, 2/3)
 
@@ -46,15 +48,15 @@ function createLetterC(center, points) {
     ['Z']
   ], {
     stroke: 'none',
-    fill: 'white',
+    fill: foregroundColor.toHex(),
   })
 }
 
 // Hexagon, Triangle, Quadrilateral
-function createPolygons(center, points, color) {
-  const white = Color.fromHex(0xffffff)
-  const light = color.lerp(white, 0.2)
-  const lighter = color.lerp(white, 0.4)
+function createPolygons(center, points, foregroundColor, backgroundColor) {
+  // const white = Color.fromHex(0xffffff)
+  const light = backgroundColor.lerp(foregroundColor, 0.2)
+  const lighter = backgroundColor.lerp(foregroundColor, 0.4)
 
   const hexagon = createPolygon(points, {
     stroke: 'none',
@@ -70,7 +72,7 @@ function createPolygons(center, points, color) {
 
   const bottomQuadrilateral = createPolygon([center, p[0], p[1], p[2]], {
     stroke: 'none',
-    fill:   color.toHex(),
+    fill:   backgroundColor.toHex(),
   })
 
   return [hexagon, rightTriangle, bottomQuadrilateral]
