@@ -2,10 +2,15 @@ const XMLNS_SVG='http://www.w3.org/2000/svg'
 
 window.addEventListener('load',
     () => drawLogo(200,
-        /* foreground */ Color.fromHex(0xffffff),
-        /* background */ Color.fromHex(0x0033ff)))
+        /* foreground  */ Color.fromHex(0xffffff),
+        /* background  */ Color.fromHex(0x0033ff),
+        /* swap colors */ false))
 
-function drawLogo(size, foregroundColor, backgroundColor) {
+function drawLogo(size, foregroundColor, backgroundColor, swapColors = false) {
+  if (swapColors) {
+    [foregroundColor, backgroundColor] = [backgroundColor, foregroundColor]
+  }
+
   let svg = document.getElementById('logo')
   svg.setAttribute('width',  size)
   svg.setAttribute('height', size)

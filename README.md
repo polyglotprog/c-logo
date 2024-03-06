@@ -1,4 +1,5 @@
 ![C Logo](/public/assets/images/c-logo.png)
+![C Logo](/public/assets/images/c-logo-swapped.png)
 
 # C Logo
 
