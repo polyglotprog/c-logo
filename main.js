@@ -11,7 +11,7 @@ function drawLogo(size, color) {
   let radius = size / 2
   let circle = new Circle([radius, radius], radius)
   let center = circle.center
-  let points = circle.getEquidistantPoints(6)
+  let points = circle.getEquidistantPoints(6, true)
 
   let [
     hexagon,
@@ -187,13 +187,13 @@ class Circle {
     this.radius = radius
   }
 
-  getEquidistantPoints(n) {
+  getEquidistantPoints(n, offset = true) {
     let center = this.center
     let radius = this.radius
 
     let points = []
     for (let i = 0; i < n; i++) {
-      let angle = (2 * i + 1) * Math.PI / n;
+      let angle = (2 * i + offset) * Math.PI / n;
       let point = center.add(Point.fromPolarCoordinates(radius, angle))
       points.push(point)
     }
